@@ -42,10 +42,21 @@ análisis del sistema de información y diseño orientado al dominio (DDD). Es *
 se arranca con una comprensión inicial y se va corrigiendo. Hay entregas de avance y un
 **documento formal final**. **Todos tienen que poder explicar las decisiones.**
 
+**Especialización asignada: centro de estudiantes.** Organiza eventos por y para los estudiantes,
+por ejemplo fiestas como la de bienvenida (salón, cantidad de asistentes, cursos, servicios).
+
 Alcance del software (documento "Objetivo y alcance"): solicitudes de clientes → propuesta
 con servicios e importes → confirmación → proveedores y tareas → seguimiento de pendientes
 → cierre o cancelación. Recorrido obligatorio a demostrar: una solicitud completa, una
 propuesta rechazada, un cambio relevante y una cancelación.
+
+> ⚠️ **Ojo con el alcance en un centro de estudiantes.** El software gestiona el **evento como encargo**,
+> no a cada estudiante ni la plata:
+> - ✅ Sede/salón, cantidad **estimada** de asistentes (dato general), servicios y proveedores, tareas, pendientes, cierre.
+> - ⚠️ Cursos y cantidad por curso: solo como dato general de la solicitud, si el cliente lo confirma (no una lista de alumnos).
+> - ❌ Quién va y quién no (gestión individual de invitados), venta de tarjetas/entradas, cobros en efectivo o transferencia.
+>
+> Pregunta clave para el relevamiento: ¿quién es el **cliente contratante** de cada evento (un curso, la comisión, la institución)?
 
 | Código | Quién | Tarea | Archivo |
 |--------|-------|-------|---------|
@@ -64,7 +75,7 @@ El modelo del SI-5 es la base de las próximas tablas y pantallas de Programaci�
 
 ## Pendientes
 
-- [ ] Link del proyecto ChatGPT‑cliente
-- [ ] Especialización asignada a nuestra organizadora
+- [ ] Link del proyecto ChatGPT‑cliente (el profe todavía no lo pasó)
+- [x] Especialización asignada: centro de estudiantes
 - [ ] Fechas: avances de SI, entrega del documento final, demo de SO
-- [ ] Confirmar con el profe de SO la interpretación "SQL dockerizada + Mongo vía web"
+- [x] Confirmado con el profe de SO: SQL dockerizada + Mongo vía web
