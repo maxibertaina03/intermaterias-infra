@@ -39,7 +39,7 @@ navegador ──▶ nginx :80 (máquina de acceso / balanceador)
 Red interna: intermaterias-net. Solo nginx publica un puerto.
 ```
 
-## Cómo levantar todo (cuando estén SO-1 a SO-5)
+## Cómo levantar todo
 
 1. Clonar **los tres repos en la misma carpeta**:
    ```
@@ -56,6 +56,8 @@ Red interna: intermaterias-net. Solo nginx publica un puerto.
    docker compose ps         # todos los servicios en "running"
    ```
 4. Abrir http://localhost
+
+Guion completo de la demo de Sistemas Operativos: [docs/so/demo.md](docs/so/demo.md).
 
 ## Trabajo en grupo
 
