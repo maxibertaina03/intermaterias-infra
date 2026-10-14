@@ -1,20 +1,24 @@
-# El dominio: un centro de estudiantes que organiza eventos
+# El dominio: una empresa que organiza eventos para centros de estudiantes
 
 > Punto de partida del proyecto. Para entender **para quién** es el software y **qué tiene que hacer**.
 > Separa lo que ya está definido de lo que todavía hay que confirmar en el relevamiento.
 
 ## En una frase
 
-Un **centro de estudiantes** organiza eventos **por y para los estudiantes** (por ejemplo, la fiesta
-de bienvenida). El software lo ayuda a **gestionar cada evento desde que alguien lo pide hasta que
-se realiza o se cancela**: qué se acordó, quién tiene que hacer qué y qué falta resolver.
+Una **empresa organizadora** hace eventos **para centros de estudiantes** (fiestas de bienvenida, de
+egresados, aniversarios). El software ayuda a su personal a **gestionar cada evento desde que el centro
+lo pide hasta que se realiza o se cancela**: qué se acordó, quién tiene que hacer qué y qué falta resolver.
+
+> **Cambio respecto de la idea inicial:** al principio pensábamos que el centro de estudiantes era quien
+> organizaba. En el relevamiento (14/10) el cliente aclaró que **es una empresa y que el centro es su
+> cliente**, y el grupo lo adoptó. Ver [la conversación](relevamiento/conversaciones/2026-10-14-masita-clientes.md).
 
 ## Cómo llegamos a esto
 
 | Origen | Qué define |
 |--------|------------|
 | Consigna común (documento "Objetivo y alcance") | Todos los grupos hacen un sistema para una **organizadora de eventos**, con el mismo objetivo, alcance y límites |
-| Especialización elegida por el grupo | Nuestra organizadora es un **centro de estudiantes** |
+| Especialización elegida por el grupo | Eventos de **centros de estudiantes** (la organizadora es una empresa especializada en ellos) |
 | Relevamiento con el ChatGPT‑cliente (pendiente) | Cómo trabaja **este** centro en particular: actores, estados, reglas, vocabulario |
 
 ## Lo que ya está definido
@@ -44,9 +48,11 @@ cambio relevante** y **una cancelación**.
 
 ### Quién usa el software
 
-Solo **integrantes del centro de estudiantes** (el personal de la organizadora). Los clientes y los
-proveedores **no** entran al sistema: se habla con ellos por fuera (WhatsApp, en persona…) y el
-resultado se anota en el sistema.
+Solo el **personal de la empresa organizadora**, con estos roles (una persona puede tener varios):
+atención al cliente · responsable de la propuesta · responsable de organización · integrante del equipo.
+
+Los clientes (centros de estudiantes) y los proveedores **no** entran al sistema: se habla con ellos por
+fuera (WhatsApp, llamadas, reuniones) y el resultado se anota en el sistema.
 
 ### Qué NO hace el software
 
@@ -63,24 +69,26 @@ software **no** las gestiona:
 
 ### Varias organizadoras en el mismo sistema (multitenant)
 
-El sistema puede usarlo **más de un centro de estudiantes**: cada uno ve solo sus datos. En la base
-de datos, cada centro es una fila de la tabla `empresas` y todo lo demás cuelga de ella con
-`id_empresa`. Para el análisis de Sistemas de Información trabajamos sobre **un solo centro**.
+El sistema puede usarlo **más de una empresa organizadora**: cada una ve solo sus datos. En la base
+de datos, cada organizadora es una fila de la tabla `empresas` y todo lo demás cuelga de ella con
+`id_empresa`; los centros de estudiantes van en `clientes`. Para el análisis de Sistemas de Información
+trabajamos sobre **una sola organizadora**.
 
-## Lo que hay que confirmar en el relevamiento
+## Lo que ya confirmó el relevamiento (ronda 1)
 
-Ideas nuestras para orientar las preguntas. **No son información del cliente** hasta que la confirme.
+| Pregunta | Respuesta | Fuente |
+|----------|-----------|--------|
+| ¿Quién es el cliente? | El **centro de estudiantes** (su comisión directiva), con una **persona de contacto** que puede cambiar | charla de masita |
+| ¿Quiénes usan el sistema? | El personal de la empresa, con 4 roles | charla de masita |
+| ¿Paquetes o propuestas a medida? | **Paquetes como punto de partida** que se adaptan; la propuesta detalla cada servicio | charla de Tomi |
+| ¿Qué confirma un encargo? | La **aceptación expresa** del cliente, registrada. **Sin seña** | charla de Tomi |
+| ¿Las propuestas vencen? | Sí, a los **15 días** | charla de Tomi |
+| ¿Todo servicio tiene proveedor? | No: algunos los hace **el equipo propio** | charla de Facu |
 
-| Pregunta | Hipótesis actual |
-|----------|------------------|
-| ¿Quién es el cliente que encarga un evento? | Un curso (con un delegado), la comisión directiva o la institución |
-| ¿Quiénes integran el centro y qué hace cada uno? | Roles tipo administrador, organizador y colaborador |
-| ¿Por qué estados pasa un evento? | solicitado → en negociación → confirmado → en preparación → realizado / cancelado |
-| ¿Para qué sirven los cursos? | Para estimar cuánta gente va y dimensionar salón y servicios |
-| ¿Trabajan con paquetes o con propuestas a medida? | Sin hipótesis todavía |
-| ¿Qué condiciones confirman un encargo? | Sin hipótesis todavía |
+Términos, estados y reglas acordados: [lenguaje ubicuo](03-dominio.md#lenguaje-ubicuo--acuerdos-del-grupo-si-4).
 
-Cuando se confirme o se descarte cada una, se actualiza esta tabla y se anota en qué conversación salió.
+**Falta confirmar (ronda 2):** si un curso puede ser cliente, para qué sirven los cursos, estados de las
+tareas, cómo se trata una cancelación y qué pasa si un proveedor se baja.
 
 ## Dónde está cada parte
 
