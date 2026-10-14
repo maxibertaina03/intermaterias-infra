@@ -10,9 +10,8 @@ Tercer repo del proyecto (sistema de gestión para una organizadora de eventos):
 
 ## El dominio
 
-Sistema para un **centro de estudiantes** que organiza eventos por y para los estudiantes (por
-ejemplo, la fiesta de bienvenida): desde que alguien pide un evento hasta que se realiza o se
-cancela. Explicación completa: [docs/si/00-dominio.md](docs/si/00-dominio.md).
+Sistema para una **empresa que organiza eventos para centros de estudiantes** (por ejemplo, la
+fiesta de bienvenida): desde que el centro pide un evento hasta que se realiza o se cancela. Explicación completa: [docs/si/00-dominio.md](docs/si/00-dominio.md).
 
 Plan de trabajo, etapas y responsables: [PLAN.md](PLAN.md).
 

@@ -1,7 +1,7 @@
 # Relevamiento
 
 El "cliente" es el proyecto de ChatGPT que da el docente: representa a nuestra organizadora de eventos.
-Nuestra especialización: **centro de estudiantes** que organiza eventos por y para los estudiantes
+Nuestra especialización: una **empresa que organiza eventos para centros de estudiantes** (el centro es el cliente)
 (por ejemplo, la fiesta de bienvenida).
 
 **No hay que inventar ni suponer cómo funciona la empresa:** todo sale de las respuestas del cliente.

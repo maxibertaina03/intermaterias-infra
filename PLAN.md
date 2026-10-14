@@ -9,7 +9,8 @@ Actividad "Estructura del sistema de eventos": entidades y atributos, DER, model
 dbdiagram.io y `database/schema.sql` (en el repo **backend**). **Es la prioridad.**
 
 `empresas` **se mantiene**: es la tabla *tenant*, cada organizadora que usa el sistema. Nuestro
-centro de estudiantes es una "empresa" y todo lo nuevo cuelga de ella con `id_empresa`.
+organizadora es una "empresa" y todo lo nuevo cuelga de ella con `id_empresa`; los centros de
+estudiantes son sus **clientes** (tabla `clientes`).
 
 | Orden | Código | Quién | Entregable |
 |-------|--------|-------|------------|
@@ -64,7 +65,8 @@ análisis del sistema de información y diseño orientado al dominio (DDD). Es *
 se arranca con una comprensión inicial y se va corrigiendo. Hay entregas de avance y un
 **documento formal final**. **Todos tienen que poder explicar las decisiones.**
 
-**Especialización asignada: centro de estudiantes.** Organiza eventos por y para los estudiantes,
+**Especialización: eventos de centros de estudiantes.** La organizadora es una **empresa** que les organiza
+eventos (confirmado en el relevamiento del 14/10; el centro es el **cliente**),
 por ejemplo fiestas como la de bienvenida (salón, cantidad de asistentes, cursos, servicios).
 
 Alcance del software (documento "Objetivo y alcance"): solicitudes de clientes → propuesta
