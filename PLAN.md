@@ -3,6 +3,28 @@
 Las tareas están cargadas como **issues asignados** (código SO-x / SI-x en el título).
 Se trabaja igual que antes: tu rama → PR a `develop` con `Closes #N` → revisión → merge.
 
+## 🗄️ Primero: Base de Datos
+
+Actividad "Estructura del sistema de eventos": entidades y atributos, DER, modelo lógico en
+dbdiagram.io y `database/schema.sql` (en el repo **backend**). **Es la prioridad.**
+
+`empresas` **se mantiene**: es la tabla *tenant*, cada organizadora que usa el sistema. Nuestro
+centro de estudiantes es una "empresa" y todo lo nuevo cuelga de ella con `id_empresa`.
+
+| Orden | Código | Quién | Entregable |
+|-------|--------|-------|------------|
+| 1 | BD-1 | masita (revisan los 3 en el PR) | `database/entidades.md` |
+| 2 | BD-2 | lucas | `database/der.png` |
+| 2 | BD-3 | tomi | Modelo lógico en dbdiagram.io (link en README) |
+| 3 | BD-4 | masita | `database/schema.sql` |
+| 4 | BD-5 | todos | Revisión: DER = lógico = script; cada uno explica sus tablas |
+
+**Orden por persona:**
+- masita: BD-1 → BD-4 → SO-5
+- tomi: BD-3 → SO-2 → SO-6
+- facu: SO-3 y SO-4 (sin cambios)
+- lucas: cerrar el PR #11 del front → BD-2 → SI-4
+
 ## Sistemas Operativos
 
 **Consigna:** la arquitectura de Programación II replicada en contenedores, con Nginx como
@@ -32,7 +54,7 @@ contenedor) y el header `X-Instancia` en cada respuesta.
 | A | SO-2 | tomi | backend | `Dockerfile` + `.dockerignore` + `/api/instancia` |
 | A | SO-3 | facu | frontend | `Dockerfile` multi-stage (build + nginx) |
 | A | SO-4 | facu | infra | `nginx/nginx.conf` + `docs/so/nginx.md` |
-| B | SO-5 | masita | infra | Integración (api1..3), prueba completa y guion de demo |
+| B | SO-5 | masita | infra | Integración (api1..3), postgres inicializado con `schema.sql`, prueba completa y guion de demo |
 | B | SO-6 | tomi | backend + infra | MongoDB Atlas ("vía web") con el modelo `mongo` |
 
 ## Sistemas de Información
@@ -42,10 +64,21 @@ análisis del sistema de información y diseño orientado al dominio (DDD). Es *
 se arranca con una comprensión inicial y se va corrigiendo. Hay entregas de avance y un
 **documento formal final**. **Todos tienen que poder explicar las decisiones.**
 
+**Especialización asignada: centro de estudiantes.** Organiza eventos por y para los estudiantes,
+por ejemplo fiestas como la de bienvenida (salón, cantidad de asistentes, cursos, servicios).
+
 Alcance del software (documento "Objetivo y alcance"): solicitudes de clientes → propuesta
 con servicios e importes → confirmación → proveedores y tareas → seguimiento de pendientes
 → cierre o cancelación. Recorrido obligatorio a demostrar: una solicitud completa, una
 propuesta rechazada, un cambio relevante y una cancelación.
+
+> ⚠️ **Ojo con el alcance en un centro de estudiantes.** El software gestiona el **evento como encargo**,
+> no a cada estudiante ni la plata:
+> - ✅ Sede/salón, cantidad **estimada** de asistentes (dato general), servicios y proveedores, tareas, pendientes, cierre.
+> - ⚠️ Cursos y cantidad por curso: solo como dato general de la solicitud, si el cliente lo confirma (no una lista de alumnos).
+> - ❌ Quién va y quién no (gestión individual de invitados), venta de tarjetas/entradas, cobros en efectivo o transferencia.
+>
+> Pregunta clave para el relevamiento: ¿quién es el **cliente contratante** de cada evento (un curso, la comisión, la institución)?
 
 | Código | Quién | Tarea | Archivo |
 |--------|-------|-------|---------|
@@ -60,11 +93,11 @@ propuesta rechazada, un cambio relevante y una cancelación.
 | SI-6 | todos | Documento formal final | `docs/si/documento-final.md` |
 
 SI-2 a SI-5 arrancan con lo que va saliendo del relevamiento y se ajustan después.
-El modelo del SI-5 es la base de las próximas tablas y pantallas de Programación.
+El modelo del SI-5 parte del DER de Base de Datos y se corrige con lo que confirme el relevamiento.
 
 ## Pendientes
 
-- [ ] Link del proyecto ChatGPT‑cliente
-- [ ] Especialización asignada a nuestra organizadora
+- [ ] Link del proyecto ChatGPT‑cliente (el profe todavía no lo pasó)
+- [x] Especialización asignada: centro de estudiantes
 - [ ] Fechas: avances de SI, entrega del documento final, demo de SO
-- [ ] Confirmar con el profe de SO la interpretación "SQL dockerizada + Mongo vía web"
+- [x] Confirmado con el profe de SO: SQL dockerizada + Mongo vía web

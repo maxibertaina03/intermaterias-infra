@@ -1,0 +1,77 @@
+# Infraestructura del sistema de eventos (Sistemas Operativos)
+#
+# navegador ──▶ nginx :80 ─┬─ /      ──▶ frontend
+#                          └─ /api/  ──▶ api1 │ api2 │ api3 ──▶ postgres
+#                                                         └──▶ MongoDB Atlas (vía web)
+#
+# Requiere los tres repos clonados uno al lado del otro:
+#   Intermaterias/intermaterias-backend
+#   Intermaterias/intermaterias-frontend
+#   Intermaterias/intermaterias-infra   ← este
+
+services:
+  # ── Base de datos SQL (dockerizada) ──────────────────────────────
+  postgres:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      # Los datos sobreviven aunque se borre el contenedor
+      - pgdata:/var/lib/postgresql/data
+      # Crea la tabla y los datos de prueba la primera vez que arranca
+      - ../intermaterias-backend/database/empresas.sql:/docker-entrypoint-initdb.d/01-empresas.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks:
+      - intermaterias-net
+    # Sin "ports": la base no se publica afuera, solo la ven los servicios de la red
+
+  # ── Réplicas de la API (SO-2 + SO-5) ─────────────────────────────
+  # Las tres usan la misma imagen; nginx reparte los pedidos entre ellas.
+  # api1:
+  #   build: ../intermaterias-backend
+  #   environment: &api-env
+  #     PORT: 3000
+  #     DB_CLIENT: ${DB_CLIENT}
+  #     DB_HOST: postgres
+  #     DB_PORT: 5432
+  #     DB_USER: ${POSTGRES_USER}
+  #     DB_PASSWORD: ${POSTGRES_PASSWORD}
+  #     DB_NAME: ${POSTGRES_DB}
+  #     DB_SSL: "false"
+  #     MONGO_URI: ${MONGO_URI}
+  #     FRONTEND_URL: http://localhost
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
+  #   networks: [intermaterias-net]
+  # api2: (igual que api1, con environment: *api-env)
+  # api3: (igual que api1, con environment: *api-env)
+
+  # ── Front (SO-3 + SO-5) ──────────────────────────────────────────
+  # frontend:
+  #   build: ../intermaterias-frontend
+  #   networks: [intermaterias-net]
+
+  # ── Balanceador / máquina de acceso (SO-4 + SO-5) ────────────────
+  # nginx:
+  #   image: nginx:alpine
+  #   volumes:
+  #     - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+  #   ports:
+  #     - "80:80"          # único puerto publicado de toda la infraestructura
+  #   depends_on: [frontend, api1, api2, api3]
+  #   networks: [intermaterias-net]
+
+networks:
+  intermaterias-net:
+    driver: bridge
+
+volumes:
+  pgdata:

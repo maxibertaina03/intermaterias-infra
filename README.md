@@ -8,6 +8,12 @@ Tercer repo del proyecto (sistema de gestión para una organizadora de eventos):
 | [intermaterias-frontend](https://github.com/maxibertaina03/intermaterias-frontend) | Front React + Vite (Programación II) |
 | **intermaterias-infra** (este) | Docker + Nginx (**Sistemas Operativos**) y el análisis (**Sistemas de Información**) |
 
+## El dominio
+
+Sistema para un **centro de estudiantes** que organiza eventos por y para los estudiantes (por
+ejemplo, la fiesta de bienvenida): desde que alguien pide un evento hasta que se realiza o se
+cancela. Explicación completa: [docs/si/00-dominio.md](docs/si/00-dominio.md).
+
 Plan de trabajo, etapas y responsables: [PLAN.md](PLAN.md).
 
 ## Estructura
