@@ -8,6 +8,11 @@ Tercer repo del proyecto (sistema de gestión para una organizadora de eventos):
 | [intermaterias-frontend](https://github.com/maxibertaina03/intermaterias-frontend) | Front React + Vite (Programación II) |
 | **intermaterias-infra** (este) | Docker + Nginx (**Sistemas Operativos**) y el análisis (**Sistemas de Información**) |
 
+## El dominio
+
+Sistema para una **empresa que organiza eventos para centros de estudiantes** (por ejemplo, la
+fiesta de bienvenida): desde que el centro pide un evento hasta que se realiza o se cancela. Explicación completa: [docs/si/00-dominio.md](docs/si/00-dominio.md).
+
 Plan de trabajo, etapas y responsables: [PLAN.md](PLAN.md).
 
 ## Estructura
@@ -33,7 +38,7 @@ navegador ──▶ nginx :80 (máquina de acceso / balanceador)
 Red interna: intermaterias-net. Solo nginx publica un puerto.
 ```
 
-## Cómo levantar todo (cuando estén SO-1 a SO-5)
+## Cómo levantar todo
 
 1. Clonar **los tres repos en la misma carpeta**:
    ```
@@ -50,6 +55,8 @@ Red interna: intermaterias-net. Solo nginx publica un puerto.
    docker compose ps         # todos los servicios en "running"
    ```
 4. Abrir http://localhost
+
+Guion completo de la demo de Sistemas Operativos: [docs/so/demo.md](docs/so/demo.md).
 
 ## Trabajo en grupo
 

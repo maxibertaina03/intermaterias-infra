@@ -1,0 +1,98 @@
+# Infraestructura del sistema de eventos (Sistemas Operativos)
+#
+# navegador ──▶ nginx :80 ─┬─ /      ──▶ frontend
+#   (acceso)               └─ /api/  ──▶ api1 │ api2 │ api3 ──▶ postgres (SQL dockerizada)
+#                                                         └──▶ MongoDB Atlas (vía web)
+#
+# Requiere los tres repos clonados uno al lado del otro:
+#   Intermaterias/intermaterias-backend
+#   Intermaterias/intermaterias-frontend
+#   Intermaterias/intermaterias-infra   ← este
+#
+# Uso:  cp .env.example .env   →   docker compose up -d --build
+# Guion de la demo: docs/so/demo.md
+
+# Configuración común de las 3 réplicas de la API (se reutiliza con *api)
+x-api: &api
+  build: ../intermaterias-backend
+  restart: unless-stopped
+  environment:
+    PORT: 3000
+    DB_CLIENT: ${DB_CLIENT:-postgres}        # postgres | mongo
+    DB_HOST: postgres                         # nombre del servicio = host en la red de Docker
+    DB_PORT: 5432
+    DB_USER: ${POSTGRES_USER}
+    DB_PASSWORD: ${POSTGRES_PASSWORD}
+    DB_NAME: ${POSTGRES_DB}
+    DB_SSL: "false"
+    MONGO_URI: ${MONGO_URI:-}
+    FRONTEND_URL: http://localhost:${NGINX_PORT:-80}
+  depends_on:
+    postgres:
+      condition: service_healthy
+  networks:
+    - intermaterias-net
+
+services:
+  # ── Base de datos SQL (dockerizada, única) ───────────────────────
+  postgres:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      # Los datos sobreviven aunque se borre el contenedor
+      - pgdata:/var/lib/postgresql/data
+      # La primera vez que arranca crea todas las tablas con datos de prueba
+      - ../intermaterias-backend/database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks:
+      - intermaterias-net
+    # Sin "ports": la base no se publica, solo la ven los servicios de la red
+
+  # ── Réplicas de la API (misma imagen, 3 contenedores) ────────────
+  api1:
+    <<: *api
+    hostname: api1               # /api/instancia responde "api1"
+  api2:
+    <<: *api
+    hostname: api2               # /api/instancia responde "api2"
+  api3:
+    <<: *api
+    hostname: api3               # /api/instancia responde "api3"
+
+  # ── Front: build de React servido por nginx ──────────────────────
+  frontend:
+    build: ../intermaterias-frontend
+    restart: unless-stopped
+    networks:
+      - intermaterias-net
+
+  # ── Balanceador de carga: la "máquina de acceso" ─────────────────
+  nginx:
+    image: nginx:alpine
+    restart: unless-stopped
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "${NGINX_PORT:-80}:80"   # único puerto publicado de toda la infraestructura
+    depends_on:
+      - frontend
+      - api1
+      - api2
+      - api3
+    networks:
+      - intermaterias-net
+
+networks:
+  intermaterias-net:
+    driver: bridge
+
+volumes:
+  pgdata:
