@@ -105,67 +105,70 @@ La empresa remarcó que distinguir **"pendiente de atención"** de **"propuesta 
 
 ## Subdominios y bounded contexts — masita (SI-5)
 
-> **Versión 0 — comprensión inicial a partir del documento de alcance.**
-> Todavía no hay relevamiento con el cliente: todo lo que dice **(validar)** es hipótesis y se
-> corrige con lo que confirme el ChatGPT‑cliente. La consigna pide que el análisis evolucione:
-> guardar esta versión y anotar después qué cambió y por qué.
->
-> **Cambios después de la ronda 1 (14/10):**
-> - La organizadora es una **empresa**, no el centro de estudiantes; el centro es el **cliente** [M].
-> - ✅ Se **confirma** la separación Encargo / Preparación: "no coordinamos proveedores ni tareas hasta tener
->   la propuesta aceptada" [M], y los roles están separados (atención y propuesta vs. organización) [M, T].
-> - Nuevos conceptos para el modelo: **persona de contacto** (≠ cliente), **servicio propio** (sin proveedor),
->   **vencimiento** de la propuesta (15 días). Se incorporan en la versión 1 del modelo, después de la ronda 2.
+> **Versión 1 · 15/10/2026** — ajustada con lo confirmado en la **ronda 1** del relevamiento.
+> Fuentes: **[M]** charla de masita · **[T]** charla de Tomi · **[F]** charla de Facu · **(H)** hipótesis.
+
+### Evolución del análisis
+
+| Versión | Fecha | Qué cambió | Por qué |
+|---------|-------|------------|---------|
+| 0 | 13/10 | Primera comprensión a partir del documento de alcance: dos contextos (Encargo y Preparación) | Todavía no había relevamiento |
+| 1 | 15/10 | La organizadora es una **empresa** y el **centro de estudiantes es el cliente** | Lo aclaró el cliente [M] |
+| 1 | 15/10 | Se **confirma** la separación Encargo / Preparación | "No coordinamos proveedores ni tareas hasta tener la propuesta aceptada" [M]; roles distintos negocian y preparan [M, T] |
+| 1 | 15/10 | Nuevos conceptos: **persona de contacto**, **rol**, **servicio propio**, **vencimiento** de la propuesta | [M], [F], [T] |
+| 1 | 15/10 | Se confirma cómo se trata un **cambio relevante**: se registra y el personal revisa a mano los compromisos afectados | [M, T] |
 
 ### Subdominios
 
 El dominio es **organizar eventos por encargo**: la empresa organizadora recibe el pedido de un centro
-de estudiantes, acuerda qué le va a ofrecer y coordina a quienes lo hacen posible.
+de estudiantes, acuerda qué le va a ofrecer y coordina a quienes lo hacen posible. Su problema central,
+según el cliente, es que **"cada integrante sepa qué se acordó con el cliente, qué tiene que hacer y qué
+está pendiente"** [M].
 
 | Subdominio | Tipo | Por qué |
 |------------|------|---------|
-| **Acuerdo del encargo**: solicitud, propuesta, aceptación o rechazo | **Core** | Es lo que hace valiosa a la organizadora: entender el pedido y llegar a un acuerdo claro de qué se va a hacer y por cuánto. El objetivo del software es justamente "conocer qué se acordó" |
-| **Coordinación de la preparación**: servicios acordados, proveedores, tareas, pendientes, cambios | **Core** | Es la otra mitad del objetivo: "quién debe hacer qué y qué falta resolver". Si se pierde un compromiso, el evento falla |
-| **Catálogos**: tipos de evento, sedes, servicios ofrecidos, cursos | Soporte | Necesarios para trabajar, pero no diferencian a la organizadora; son listas que se consultan |
-| **Acceso del personal**: usuarios, roles, organizadora (tenant) | Genérico | Cualquier sistema lo necesita y se resuelve igual en todos lados |
+| **Acuerdo del encargo**: solicitud, propuesta, aceptación, rechazo, vencimiento | **Core** | Es donde la empresa se diferencia: entender el pedido y llegar a un acuerdo claro. Los problemas reales están acá: pedidos que quedan sin respuesta y datos dispersos [M] |
+| **Coordinación de la preparación**: servicios acordados (con proveedor o propios), tareas, pendientes, cambios | **Core** | La otra mitad del objetivo: "quién hace qué y qué falta". Contactado no es confirmado [F]: si se pierde un compromiso, el evento falla |
+| **Catálogos**: tipos de evento, sedes, servicios con precio de referencia, proveedores, cursos | Soporte | Se consultan para trabajar, pero no diferencian a la empresa |
+| **Acceso del personal**: organizadora, usuarios y roles | Genérico | Cualquier sistema lo necesita; acá con 4 roles y una persona puede tener varios [M] |
 
-Fuera del dominio del software (lo hace la organizadora pero no lo soporta el sistema): venta de
-tarjetas, lista de asistentes, cobros y pagos.
+Fuera del software: venta de tarjetas, lista de asistentes, cobros, señas y pagos (alcance + "no exigimos
+seña" [T]).
 
 ### Bounded contexts
 
-Proponemos **dos contextos de negocio** más uno de soporte. El límite no sigue sectores de la
-empresa ni componentes técnicos: sale de que **las mismas palabras cambian de significado** y de
-que cada parte tiene **reglas distintas**.
+Dos **contextos de negocio** más uno de soporte. El límite sale de que **las mismas palabras cambian de
+significado** y de que cada parte tiene **reglas y personas distintas**; no sigue sectores ni componentes
+técnicos.
 
-| Contexto | Qué incluye | Pregunta que responde |
-|----------|-------------|-----------------------|
-| **Encargo** (comercial) | Cliente, Solicitud, Propuesta, Ítem de propuesta | ¿Qué pidió el cliente y qué le ofrecimos / acordamos? |
-| **Preparación** (operativo) | Evento confirmado, Servicio acordado, Proveedor, Tarea, Cambio | ¿Quién hace qué, qué está confirmado y qué falta? |
-| Organización y acceso (soporte) | Organizadora, Usuario, Rol, catálogos | ¿Quién puede usar el sistema y con qué datos base? |
+| Contexto | Conceptos | Quién trabaja ahí [M, T] | Pregunta que responde |
+|----------|-----------|--------------------------|-----------------------|
+| **Encargo** (comercial) | Cliente, Persona de contacto, Solicitud, Propuesta, Ítem de propuesta | Atención al cliente, Responsable de la propuesta | ¿Qué pidió el cliente y qué le ofrecimos / acordamos? |
+| **Preparación** (operativo) | Evento confirmado, Servicio acordado, Proveedor, Tarea, Cambio | Responsable de organización, Integrantes | ¿Quién hace qué, qué está confirmado y qué falta? |
+| Organización y acceso (soporte) | Organizadora, Usuario, Rol, catálogos | Todos | ¿Quién usa el sistema y con qué datos base? |
 
 **Por qué separar Encargo y Preparación:**
 
-1. **"Servicio" significa cosas distintas.** En *Encargo* es algo **ofrecido con un importe**
-   ("DJ — $180.000"). En *Preparación* es un **compromiso con un proveedor** que está pendiente o
-   confirmado ("DJ Nacho Beats — confirmado"). Mismo nombre, otro concepto y otras reglas.
-2. **"Evento" cambia de naturaleza.** Antes de aceptar la propuesta es un **pedido en negociación**
-   (puede cambiar todo, puede rechazarse). Después es un **compromiso** que se ejecuta.
-3. **Reglas distintas.** En *Encargo*: una sola propuesta vigente, total = suma de ítems,
-   aceptación o rechazo con motivo. En *Preparación*: estados de proveedores y tareas, vencimientos,
-   y revisar compromisos afectados ante un cambio.
-4. **Personas distintas (✅ confirmado).** Negocian el *responsable de la propuesta* y *atención al
-   cliente*; preparan el *responsable de organización* y los *integrantes* [M, T].
+1. **"Servicio" significa cosas distintas.** En *Encargo* es algo **ofrecido con un importe** [T]. En
+   *Preparación* es un **compromiso** que cumple un proveedor (pendiente / confirmado) **o el equipo
+   propio**, siempre con un responsable [F].
+2. **"Solicitud" se convierte en "evento".** Antes de aceptar es un pedido en negociación: puede cambiar,
+   rechazarse, renegociarse o **vencer a los 15 días** [T]. Después es un compromiso que se ejecuta.
+3. **Reglas distintas.** *Encargo*: una propuesta vigente, total = suma − descuento, vigencia de 15 días,
+   aceptación expresa sin seña [T]. *Preparación*: contactado ≠ confirmado, responsables, tareas y
+   vencimientos [F].
+4. **Personas distintas** (✅ confirmado [M, T]): ver tabla de arriba.
 
-**Cómo se relacionan:** cuando la propuesta se **acepta**, el contexto Encargo le pasa a Preparación
-los servicios acordados y las condiciones. A partir de ahí, Preparación los convierte en
-compromisos con proveedores y tareas. Un **cambio relevante** (fecha, servicio) vuelve a involucrar
-a Encargo si afecta lo acordado **(validar cómo lo tratan)**.
+**Cómo se relacionan:** la **aceptación** de la propuesta es el punto de paso. Encargo le entrega a
+Preparación la fecha y sede acordadas, los servicios aceptados, el presupuesto y las condiciones [T]; el
+responsable de la propuesta registra la aceptación y desde ahí "el resto del equipo consulta esa
+información para organizar las tareas y coordinar con los proveedores" [T]. Un **cambio relevante**
+después de confirmar se registra y obliga a revisar a mano los compromisos afectados [M, T].
 
-> La base de datos es una sola (BD): los contextos son una forma de **entender** el dominio y
-> mantener el lenguaje claro, no tablas ni servidores separados.
+> La base de datos es una sola: los contextos son una forma de **entender** el dominio y mantener el
+> lenguaje claro, no tablas ni servidores separados.
 
-### Modelo conceptual
+### Modelo conceptual (versión 1)
 
 ```mermaid
 classDiagram
@@ -174,21 +177,30 @@ classDiagram
   namespace Encargo {
     class Cliente {
       nombre
-      tipo: curso / comisión / institución «validar»
-      contacto
+      tipo: centro de estudiantes / grupo de estudiantes
+      institución «interviene pero no contrata»
+    }
+    class PersonaDeContacto {
+      nombre
+      teléfono
+      email
+      vigente
     }
     class Solicitud {
       tipo de evento
-      fecha prevista «puede ser tentativa»
-      sede prevista
+      fecha prevista
+      sede prevista «puede no estar confirmada»
       cantidad estimada de asistentes
       necesidades y preferencias
-      estado
+      estado: recibida / falta información / propuesta enviada / no aceptada
     }
     class Propuesta {
-      estado: borrador / enviada / aceptada / rechazada
+      estado: en preparación / presentada / aceptada / rechazada / vencida
+      descuento
       condiciones
-      motivo de rechazo
+      motivo de rechazo «opcional»
+      fecha de presentación
+      vigencia: 15 días
       total «se calcula»
     }
     class ItemPropuesta {
@@ -200,24 +212,25 @@ classDiagram
 
   namespace Preparacion {
     class Evento {
-      fecha
-      sede
+      fecha y sede acordadas
       estado: confirmado / en preparación / realizado / cancelado
       observaciones de cierre
       motivo de cancelación
     }
     class ServicioAcordado {
+      propio o de proveedor
       estado: pendiente / confirmado
-      observaciones
+      observaciones del contacto
     }
     class Proveedor {
       nombre
       contacto
+      observaciones
     }
     class Tarea {
       descripción
       fecha prevista
-      estado
+      estado «H»
       vencida «se calcula»
     }
     class Cambio {
@@ -229,34 +242,37 @@ classDiagram
 
   class Usuario {
     nombre
-    rol «validar»
+    roles: atención / propuesta / organización / integrante
   }
   class Curso {
-    nombre
+    nombre «H»
   }
 
+  Cliente "1" --> "1..*" PersonaDeContacto : se comunica a través de
   Cliente "1" --> "*" Solicitud : encarga
+  PersonaDeContacto "1" --> "*" Solicitud : es el contacto de
   Solicitud "1" --> "0..1" Propuesta : tiene una vigente
-  Propuesta "1" *-- "1..*" ItemPropuesta : ofrece
+  Propuesta "1" *-- "1..*" ItemPropuesta : detalla
   Solicitud "1" --> "0..1" Evento : al aceptarse se convierte en
-  Solicitud "*" --> "*" Curso : cantidad estimada por curso «validar»
+  Solicitud "*" --> "*" Curso : cantidad por curso «H»
   Evento "1" *-- "*" ServicioAcordado : acuerda
   ServicioAcordado "*" --> "0..1" Proveedor : lo presta
+  ServicioAcordado "*" --> "0..1" Usuario : responsable
   Evento "1" *-- "*" Tarea : requiere
   Tarea "*" --> "0..1" Usuario : responsable
   Evento "1" *-- "*" Cambio : registra
   Cambio "*" --> "1" Usuario : registrado por
 ```
 
-**Relación con la base de datos:** en la BD, `Solicitud` y `Evento` son la **misma tabla**
-(`eventos`, con estado), porque es el mismo encargo que avanza. En el modelo conceptual los
-separamos para mostrar que **cambia de significado** al aceptarse la propuesta. Los dos modelos
-son coherentes: el conceptual explica el negocio, el lógico decide cómo guardarlo.
+**Relación con la base de datos (v2):** `Solicitud` y `Evento` son la **misma tabla** (`eventos`, con
+estado), porque es el mismo encargo que avanza; en el modelo conceptual se separan para mostrar que
+**cambia de significado** al aceptarse la propuesta. `PersonaDeContacto` → tabla `contactos`; los roles →
+tabla `usuario_roles`; `ServicioAcordado` → `evento_servicios` (con `es_propio` e `id_responsable`). Ver
+`database/entidades.md` en el backend.
 
-### Pendiente de validar con el relevamiento
+### Pendiente (hipótesis)
 
-- [ ] ¿Quién es el cliente? (curso, comisión, institución) → afecta a `Cliente`
-- [ ] ¿Negocian y preparan personas distintas? → refuerza (o no) la separación de contextos
-- [ ] ¿Qué pasa con lo acordado cuando hay un cambio relevante?
-- [ ] ¿Se usan los cursos para organizar o solo como dato?
-- [ ] Estados reales de solicitud, evento, propuesta y tarea
+- [ ] ¿Un **curso** puede ser cliente por sí mismo? (el cliente se contradijo) [M]
+- [ ] ¿Se usan los **cursos** para organizar? (define si `Curso` queda en el modelo) [M]
+- [ ] Estados de las **tareas** y detalles de la **cancelación** (no se hizo la charla de seguimiento)
+- [ ] ¿Hace falta guardar los **paquetes**? [T]
