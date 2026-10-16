@@ -12,7 +12,7 @@ Duración estimada: 10 minutos. Probado completo el 14/10/2026.
 ```bash
 # Los tres repos clonados uno al lado del otro y actualizados (git pull origin develop en cada uno)
 cd intermaterias-infra
-cp .env.example .env            # completar POSTGRES_PASSWORD (y NGINX_PORT si el 80 está ocupado)
+cp .env.example .env            # completar POSTGRES_PASSWORD, las claves de Clerk (y NGINX_PORT si el 80 está ocupado)
 docker compose down -v          # empezar de cero: borra la base y la vuelve a crear con schema.sql
 docker compose up -d --build    # construye las imágenes y levanta todo (la primera vez tarda ~1 min)
 ```
