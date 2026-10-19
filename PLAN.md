@@ -1,3 +1,18 @@
+# Etapa 3 — Login y recorrido del sistema
+
+Plan completo y tareas: issue fijado **#22** (📋 Plan etapa 3).
+
+| Quién | Área | Issues |
+|-------|------|--------|
+| masita | Login con Clerk | backend #25 · front #18 · prueba final infra #21 |
+| Lucas | Clientes, contactos, solicitudes/eventos, cambios, cierre y cancelación | backend #26 · front #19 |
+| Tomi | Propuestas, tareas y pendientes | backend #27 · front #20 |
+| Facu | Catálogos y coordinación de servicios | backend #28 · front #21 |
+
+Guías: `ESTRUCTURA.md` en el **front** (shadcn/ui, carpetas por área) y en el **backend** (multitenant, endpoints por área).
+
+---
+
 # Plan — Etapa 2: Sistemas Operativos + Sistemas de Información
 
 Las tareas están cargadas como **issues asignados** (código SO-x / SI-x en el título).

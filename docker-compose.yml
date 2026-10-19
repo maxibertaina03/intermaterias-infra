@@ -27,6 +27,10 @@ x-api: &api
     DB_SSL: "false"
     MONGO_URI: ${MONGO_URI:-}
     FRONTEND_URL: http://localhost:${NGINX_PORT:-80}
+    # Login: con claves de Clerk es real; sin claves, modo desarrollo con DEV_ID_USUARIO
+    CLERK_PUBLISHABLE_KEY: ${CLERK_PUBLISHABLE_KEY:-}
+    CLERK_SECRET_KEY: ${CLERK_SECRET_KEY:-}
+    DEV_ID_USUARIO: ${DEV_ID_USUARIO:-}
   depends_on:
     postgres:
       condition: service_healthy
@@ -69,7 +73,10 @@ services:
 
   # ── Front: build de React servido por nginx ──────────────────────
   frontend:
-    build: ../intermaterias-frontend
+    build:
+      context: ../intermaterias-frontend
+      args:
+        VITE_CLERK_PUBLISHABLE_KEY: ${CLERK_PUBLISHABLE_KEY:-}   # la clave pública va dentro del build de React
     restart: unless-stopped
     networks:
       - intermaterias-net
