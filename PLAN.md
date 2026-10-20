@@ -1,6 +1,19 @@
-# Etapa 3 — Login y recorrido del sistema
+# Etapa 4 — Cada empresa con su login, invitados y versiones (v2.0.0)
 
-Plan completo y tareas: issue fijado **#22** (📋 Plan etapa 3).
+Plan completo y tareas: issue fijado **#28** (📋 Plan etapa 4). Versiones: `docs/versiones.md`.
+
+| Quién | Pendiente de la etapa 3 | Etapa 4 |
+|-------|-------------------------|---------|
+| masita | Release v1.0.0 · SI-6 #12 | Login por empresa backend #40 · sidebar y menú front #30 · versiones infra #26 · release v2.0.0 infra #27 |
+| Lucas | backend #37 | API de invitados backend #41 |
+| Facu | SI-1 #6 · SI-3 #9 | Pantalla del invitado y pestaña Invitados front #31 |
+| Tomi | backend #38 | Página de Usuarios front #32 · diagramas y guía backend #42 |
+
+---
+
+# Etapa 3 — Login y recorrido del sistema (v1.0.0, terminada)
+
+Plan completo y tareas: issue **#22** (📋 Plan etapa 3).
 
 | Quién | Área | Issues |
 |-------|------|--------|
