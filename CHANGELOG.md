@@ -6,6 +6,12 @@ El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y l
 
 ## [Sin publicar]
 
+### Agregado
+- SI-1 ronda 2: relevamiento de confirmación, reemplazo de proveedores y pendientes (#6).
+
+### Cambiado
+- SI-3 actualizado con la v2.0.0: invitados y pagos dentro del sistema, nuevos actores y riesgos de calidad.
+
 ## [2.0.0] - 2026-10-22
 
 Infraestructura y documentación de la etapa 4.
