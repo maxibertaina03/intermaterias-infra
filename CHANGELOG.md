@@ -6,7 +6,11 @@ El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y l
 
 ## [Sin publicar]
 
-## [1.0.0] - en preparación
+## [1.0.1] - 2026-10-22
+
+Sin cambios en la infraestructura: acompaña el arreglo de la API (en Docker las fechas se veían un día antes; ahora se ven bien).
+
+## [1.0.0] - 2026-10-22
 
 ### Agregado
 - **Docker Compose** con toda la infraestructura: PostgreSQL (se inicializa con `schema.sql`), 3 réplicas de la API, el front y Nginx.
@@ -19,5 +23,6 @@ El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y l
 ### Corregido
 - Si una réplica de la API se cae, Nginx la saltea en lugar de dejar pedidos colgados hasta 60 segundos (#25).
 
-[Sin publicar]: https://github.com/maxibertaina03/intermaterias-infra/compare/v1.0.0...develop
+[Sin publicar]: https://github.com/maxibertaina03/intermaterias-infra/compare/v1.0.1...develop
+[1.0.1]: https://github.com/maxibertaina03/intermaterias-infra/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/maxibertaina03/intermaterias-infra/releases/tag/v1.0.0
