@@ -6,7 +6,7 @@ El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y l
 
 ## [Sin publicar]
 
-## [1.0.0] - en preparación
+## [1.0.0] - 2026-10-22
 
 ### Agregado
 - **Docker Compose** con toda la infraestructura: PostgreSQL (se inicializa con `schema.sql`), 3 réplicas de la API, el front y Nginx.
