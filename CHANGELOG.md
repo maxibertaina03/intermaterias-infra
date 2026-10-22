@@ -6,6 +6,14 @@ El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y l
 
 ## [Sin publicar]
 
+## [2.0.0] - 2026-10-22
+
+Infraestructura y documentación de la etapa 4.
+
+### Agregado
+- Nginx acepta comprobantes de invitados de hasta 5 MB (`client_max_body_size 6m`) (#30).
+- SI-3: análisis del sistema de información (`docs/si/02-sistema-de-informacion.md`) (#32).
+
 ## [1.0.1] - 2026-10-22
 
 Sin cambios en la infraestructura: acompaña el arreglo de la API (en Docker las fechas se veían un día antes; ahora se ven bien).
@@ -23,6 +31,7 @@ Sin cambios en la infraestructura: acompaña el arreglo de la API (en Docker las
 ### Corregido
 - Si una réplica de la API se cae, Nginx la saltea en lugar de dejar pedidos colgados hasta 60 segundos (#25).
 
-[Sin publicar]: https://github.com/maxibertaina03/intermaterias-infra/compare/v1.0.1...develop
+[Sin publicar]: https://github.com/maxibertaina03/intermaterias-infra/compare/v2.0.0...develop
+[2.0.0]: https://github.com/maxibertaina03/intermaterias-infra/compare/v1.0.1...v2.0.0
 [1.0.1]: https://github.com/maxibertaina03/intermaterias-infra/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/maxibertaina03/intermaterias-infra/releases/tag/v1.0.0
