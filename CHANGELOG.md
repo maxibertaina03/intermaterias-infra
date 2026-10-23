@@ -6,6 +6,12 @@ El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y l
 
 ## [Sin publicar]
 
+### Agregado
+- SI-6: documento final de Sistemas de Información (versión 1), que integra relevamiento, análisis y diseño conceptual.
+
+### Corregido
+- La conversación de la ronda 2 de proveedores tenía la fecha equivocada en el nombre (14/10): ahora es `2026-10-22-facu-servicio-proveedores-ronda2.md`.
+
 ## [2.0.1] - 2026-10-22
 
 Documentación de Sistemas de Información al día con la v2: relevamiento de proveedores (ronda 2) y análisis del sistema de información.
