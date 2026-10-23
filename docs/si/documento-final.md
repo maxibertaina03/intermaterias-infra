@@ -45,7 +45,7 @@ Todo lo que se presenta como funcionamiento de la empresa sale de las conversaci
 | **[M]** | [Conversación de masita: clientes, solicitudes y cierre](relevamiento/conversaciones/2026-10-14-masita-clientes.md) (14/10) |
 | **[T]** | [Conversación de Tomi: propuesta y confirmación](relevamiento/conversaciones/2026-10-14-tomi-propuesta.md) (14/10) |
 | **[F1]** | [Conversación de Facu: servicios y proveedores, ronda 1](relevamiento/conversaciones/2026-10-14-facu-servicio-proveedores.md) (14/10) |
-| **[F2]** | [Conversación de Facu: servicios y proveedores, ronda 2](relevamiento/conversaciones/2026-10-14-facu-servicio-proveedores-ronda2.md) (22/10) |
+| **[F2]** | [Conversación de Facu: servicios y proveedores, ronda 2](relevamiento/conversaciones/2026-10-22-facu-servicio-proveedores-ronda2.md) (22/10) |
 | **[A]** | Documento común "Objetivo y alcance del software" |
 | **(G)** | **Decisión del grupo**: no surge del cliente; se tomó para poder desarrollar y queda pendiente de validar |
 | **(H)** | **Hipótesis**: interpretación todavía no confirmada |
@@ -477,7 +477,7 @@ El software v2 incluye dos funciones que **no forman parte de este análisis**:
 - Conversaciones: [masita, clientes](relevamiento/conversaciones/2026-10-14-masita-clientes.md) ·
   [Tomi, propuesta](relevamiento/conversaciones/2026-10-14-tomi-propuesta.md) ·
   [Facu, proveedores ronda 1](relevamiento/conversaciones/2026-10-14-facu-servicio-proveedores.md) ·
-  [Facu, proveedores ronda 2](relevamiento/conversaciones/2026-10-14-facu-servicio-proveedores-ronda2.md)
+  [Facu, proveedores ronda 2](relevamiento/conversaciones/2026-10-22-facu-servicio-proveedores-ronda2.md)
 - Documentos de trabajo: [sistema organizacional](01-sistema-organizacional.md) ·
   [sistema de información](02-sistema-de-informacion.md) · [dominio](03-dominio.md) ·
   [relevamiento por área](relevamiento/README.md)
