@@ -19,8 +19,10 @@ Cuando sube un número, los de la derecha vuelven a cero. Las versiones `0.x` fu
 | Versión | Fecha | Qué trajo |
 |---|---|---|
 | 0.1.0 | 06/10/2026 (API) · 15/10/2026 (front) | CRUD de empresas, conexión a Neon y Docker |
-| **1.0.0** | al hacer el release de la etapa 3 | Recorrido completo de un evento con login: solicitud, propuesta, aceptación, servicios, tareas, pendientes, cierre, rechazo, cambios y cancelación |
-| 2.0.0 | etapa 4 (en curso) | Cada empresa con su login y sus usuarios, super admin, pantalla de invitados con pago |
+| **1.0.0** | 22/10/2026 | Recorrido completo de un evento con login: solicitud, propuesta, aceptación, servicios, tareas, pendientes, cierre, rechazo, cambios y cancelación |
+| 1.0.1 | 22/10/2026 | PARCHE: en Docker las fechas se veían un día antes (arreglo de la API) |
+| **2.0.0** | 22/10/2026 | Cada empresa con su login y sus usuarios, super admin, pantalla de invitados con pago |
+| 2.0.1 | 22/10/2026 | PARCHE: límite de pedidos y descarte de comprobantes en el link de invitados; DER, entidades, guía y documentos de SI al día con la v2 |
 
 El detalle de cada versión está en el `CHANGELOG.md` de cada repositorio.
 

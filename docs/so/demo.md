@@ -15,6 +15,10 @@ cd intermaterias-infra
 cp .env.example .env            # completar POSTGRES_PASSWORD, las claves de Clerk (y NGINX_PORT si el 80 está ocupado)
 docker compose down -v          # empezar de cero: borra la base y la vuelve a crear con schema.sql
 docker compose up -d --build    # construye las imágenes y levanta todo (la primera vez tarda ~1 min)
+
+# Desde la v2.0.0 las cuentas no se crean solas: vincular los usuarios de ejemplo con Clerk
+# (superadmin, sofia, mateo, valentina, joaquin; la contraseña se pasa al correrlo, nunca va en el repo)
+docker compose exec -e DEMO_PASSWORD='…' api1 npm run usuarios-demo
 ```
 
 ## 1. Arquitectura (1 min)
