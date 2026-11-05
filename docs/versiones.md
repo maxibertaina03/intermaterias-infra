@@ -24,6 +24,7 @@ Cuando sube un número, los de la derecha vuelven a cero. Las versiones `0.x` fu
 | **2.0.0** | 22/10/2026 | Cada empresa con su login y sus usuarios, super admin, pantalla de invitados con pago |
 | 2.0.1 | 22/10/2026 | PARCHE: límite de pedidos y descarte de comprobantes en el link de invitados; DER, entidades, guía y documentos de SI al día con la v2 |
 | 2.1.0 | 05/11/2026 | MENOR: el sistema tiene color (paleta índigo, coral y turquesa) y documento final de SI |
+| 2.2.0 | 05/11/2026 | MENOR: menú lateral agrupado y prueba gratuita de 30 días con autoregistro (base v7) |
 
 El detalle de cada versión está en el `CHANGELOG.md` de cada repositorio.
 
