@@ -6,6 +6,13 @@ El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y l
 
 ## [Sin publicar]
 
+## [2.2.0] - 2026-11-05
+
+Versión 2.2.0: menú agrupado y prueba gratuita de 30 días con autoregistro.
+
+### Agregado
+- `docs/versiones.md`: fila de la 2.2.0. Al actualizar una base existente hay que correr `database/migraciones/007-prueba-gratuita.sql` del back (las bases nuevas la traen en `schema.sql`).
+
 ## [2.1.0] - 2026-11-05
 
 Documento final de Sistemas de Información y colores del sistema (en el front).
@@ -51,7 +58,8 @@ Sin cambios en la infraestructura: acompaña el arreglo de la API (en Docker las
 ### Corregido
 - Si una réplica de la API se cae, Nginx la saltea en lugar de dejar pedidos colgados hasta 60 segundos (#25).
 
-[Sin publicar]: https://github.com/maxibertaina03/intermaterias-infra/compare/v2.1.0...develop
+[Sin publicar]: https://github.com/maxibertaina03/intermaterias-infra/compare/v2.2.0...develop
+[2.2.0]: https://github.com/maxibertaina03/intermaterias-infra/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/maxibertaina03/intermaterias-infra/compare/v2.0.1...v2.1.0
 [2.0.1]: https://github.com/maxibertaina03/intermaterias-infra/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/maxibertaina03/intermaterias-infra/compare/v1.0.1...v2.0.0
