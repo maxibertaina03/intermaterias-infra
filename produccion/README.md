@@ -1,6 +1,8 @@
 # Producción en el VPS
 
 Mismo método que BaseInfra: **se compila una vez en GitHub Actions y el servidor solo descarga**.
+Qué se hizo en el despliegue actual, el porqué de cada decisión y cómo volver a desplegar:
+[`docs/despliegue.md`](../docs/despliegue.md).
 
 ```
   intermaterias-backend  ─tag v2.2.1─► GitHub Actions ─► ghcr.io/maxibertaina03/intermaterias-backend:v2.2.1
