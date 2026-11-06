@@ -6,6 +6,13 @@ El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y l
 
 ## [Sin publicar]
 
+## [2.3.0] - 2026-11-06
+
+Versión 2.3.0: recorrido guiado para quien usa el sistema por primera vez.
+
+### Agregado
+- `docs/versiones.md`: fila de la 2.3.0. En el VPS, `deploy.sh` corre sola la migración `008-recorrido.sql`; en otras bases hay que correrla a mano.
+
 ### Agregado
 - `docs/despliegue.md`: qué se hizo en el despliegue en el VPS, cómo está armado, cómo publicar una versión nueva, cómo desplegar en un servidor desde cero y lo que queda pendiente.
 
@@ -69,7 +76,8 @@ Sin cambios en la infraestructura: acompaña el arreglo de la API (en Docker las
 ### Corregido
 - Si una réplica de la API se cae, Nginx la saltea en lugar de dejar pedidos colgados hasta 60 segundos (#25).
 
-[Sin publicar]: https://github.com/maxibertaina03/intermaterias-infra/compare/v2.2.1...develop
+[Sin publicar]: https://github.com/maxibertaina03/intermaterias-infra/compare/v2.3.0...develop
+[2.3.0]: https://github.com/maxibertaina03/intermaterias-infra/compare/v2.2.1...v2.3.0
 [2.2.1]: https://github.com/maxibertaina03/intermaterias-infra/compare/v2.2.0...v2.2.1
 [2.2.0]: https://github.com/maxibertaina03/intermaterias-infra/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/maxibertaina03/intermaterias-infra/compare/v2.0.1...v2.1.0
