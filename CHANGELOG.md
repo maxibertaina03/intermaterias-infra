@@ -6,6 +6,10 @@ El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y l
 
 ## [Sin publicar]
 
+### Agregado
+- `produccion/`: despliegue en el VPS con el método de BaseInfra. Compose con las imágenes de `ghcr.io/maxibertaina03` (back, front y landing), nginx del servidor con HTTPS para la landing y el sistema, y scripts `deploy.sh`, `revertir.sh`, `migrar.sh`, `backup.sh`, `restaurar-db.sh`, `generar-env.sh` y `03-ssl.sh`.
+- Las migraciones se corren desde la imagen del backend y quedan anotadas en `migraciones_aplicadas`.
+
 ## [2.2.0] - 2026-11-05
 
 Versión 2.2.0: menú agrupado y prueba gratuita de 30 días con autoregistro.

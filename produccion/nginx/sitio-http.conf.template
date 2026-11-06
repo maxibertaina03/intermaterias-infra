@@ -1,0 +1,21 @@
+# Etapa 1 (antes del certificado): solo HTTP, para el desafío de certbot.
+# ${DOMINIO} y ${DOMINIO_APP} los reemplaza scripts/03-ssl.sh.
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    server_name _;
+    return 444;
+}
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name ${DOMINIO} ${DOMINIO_APP};
+
+    location ^~ /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+    }
+    location / {
+        return 503;
+    }
+}
