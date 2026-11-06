@@ -1,0 +1,97 @@
+# Sitio de producción (nginx del servidor). Lo instala scripts/03-ssl.sh con envsubst.
+#   https://${DOMINIO}/      -> landing               (127.0.0.1:8082)
+#   https://${DOMINIO_APP}/  -> nginx interno del sistema (127.0.0.1:8081: front + 3 réplicas)
+# Los snippets (sistema-ssl, sistema-headers, sistema-proxy) y las zonas de rate limit los
+# instaló 01-preparar-servidor.sh de BaseInfra.
+
+# Requests por IP o con otro Host: se cortan sin respuesta
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    server_name _;
+    return 444;
+}
+server {
+    listen 443 ssl default_server;
+    listen [::]:443 ssl default_server;
+    server_name _;
+    ssl_reject_handshake on;
+}
+
+# HTTP -> HTTPS
+server {
+    listen 80;
+    listen [::]:80;
+    server_name ${DOMINIO} ${DOMINIO_APP};
+    location ^~ /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+    }
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
+
+# ---------- Landing ----------
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name ${DOMINIO};
+
+    ssl_certificate     /etc/letsencrypt/live/${DOMINIO}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/${DOMINIO}/privkey.pem;
+    include snippets/sistema-ssl.conf;
+
+    access_log /var/log/nginx/sistema.access.log;
+    error_log  /var/log/nginx/sistema.error.log warn;
+    client_max_body_size 1m;
+    limit_conn conn_ip 50;
+
+    location ~ /\.(?!well-known) { return 404; }
+
+    location / {
+        include snippets/sistema-proxy.conf;
+        include snippets/sistema-headers.conf;
+        proxy_pass http://127.0.0.1:8082;
+    }
+}
+
+# ---------- Sistema ----------
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name ${DOMINIO_APP};
+
+    # Un solo certificado para los dos nombres (se pidió con -d DOMINIO -d DOMINIO_APP)
+    ssl_certificate     /etc/letsencrypt/live/${DOMINIO}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/${DOMINIO}/privkey.pem;
+    include snippets/sistema-ssl.conf;
+
+    access_log /var/log/nginx/sistema.access.log;
+    error_log  /var/log/nginx/sistema.error.log warn;
+    # Comprobantes de pago de los invitados: hasta 5 MB
+    client_max_body_size 6m;
+    limit_conn conn_ip 50;
+
+    location ~ /\.(?!well-known) { return 404; }
+
+    # Rutas públicas (registro de la prueba gratis, invitaciones): límite estricto
+    location /api/publico/ {
+        limit_req zone=api_auth burst=10 nodelay;
+        include snippets/sistema-proxy.conf;
+        include snippets/sistema-headers.conf;
+        proxy_pass http://127.0.0.1:8081;
+    }
+
+    location /api/ {
+        limit_req zone=api_general burst=60 nodelay;
+        include snippets/sistema-proxy.conf;
+        include snippets/sistema-headers.conf;
+        proxy_pass http://127.0.0.1:8081;
+    }
+
+    location / {
+        include snippets/sistema-proxy.conf;
+        include snippets/sistema-headers.conf;
+        proxy_pass http://127.0.0.1:8081;
+    }
+}

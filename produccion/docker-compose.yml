@@ -1,0 +1,87 @@
+# Producción en el VPS: mismo esquema que la demo (nginx interno + 3 réplicas + postgres),
+# pero con las imágenes ya construidas por GitHub Actions (ghcr.io). Acá no se compila nada.
+#
+# internet ─▶ nginx del servidor (HTTPS, 443)
+#               ├─ DOMINIO      ─▶ 127.0.0.1:8082  landing
+#               └─ DOMINIO_APP  ─▶ 127.0.0.1:8081  nginx interno ─┬─ /      ─▶ frontend
+#                                                                 └─ /api/  ─▶ api1 │ api2 │ api3 ─▶ postgres
+#
+# Se usa con los scripts de produccion/scripts (deploy.sh, backup.sh...), no a mano.
+name: intermaterias
+
+x-api: &api
+  image: ${REGISTRY:-ghcr.io/maxibertaina03}/intermaterias-backend:${SISTEMA_TAG:?Falta SISTEMA_TAG}
+  restart: unless-stopped
+  environment:
+    PORT: 3000
+    DB_CLIENT: postgres
+    DB_HOST: postgres
+    DB_PORT: 5432
+    DB_USER: ${POSTGRES_USER}
+    DB_PASSWORD: ${POSTGRES_PASSWORD}
+    DB_NAME: ${POSTGRES_DB}
+    DB_SSL: "false"
+    FRONTEND_URL: https://${DOMINIO_APP}
+    CLERK_PUBLISHABLE_KEY: ${CLERK_PUBLISHABLE_KEY:?Falta CLERK_PUBLISHABLE_KEY}
+    CLERK_SECRET_KEY: ${CLERK_SECRET_KEY:?Falta CLERK_SECRET_KEY}
+    # DEV_ID_USUARIO NO se pasa: en producción el login es siempre con Clerk
+  depends_on:
+    postgres:
+      condition: service_healthy
+  security_opt: ["no-new-privileges:true"]
+  networks: [interna]
+
+services:
+  postgres:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    # VPS de 1 GB: memoria acotada para la base
+    command: ["postgres", "-c", "shared_buffers=128MB", "-c", "max_connections=50"]
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    networks: [interna]
+    # Sin "ports": la base no se publica
+
+  api1: { <<: *api, hostname: api1 }
+  api2: { <<: *api, hostname: api2 }
+  api3: { <<: *api, hostname: api3 }
+
+  frontend:
+    image: ${REGISTRY:-ghcr.io/maxibertaina03}/intermaterias-frontend:${SISTEMA_TAG:?Falta SISTEMA_TAG}
+    restart: unless-stopped
+    networks: [interna]
+
+  # Balanceador interno (el mismo nginx.conf de la demo): reparte /api/ entre las 3 réplicas
+  nginx:
+    image: nginx:alpine
+    restart: unless-stopped
+    volumes:
+      - ../nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "127.0.0.1:8081:80"   # solo local: lo publica el nginx del servidor con HTTPS
+    depends_on: [frontend, api1, api2, api3]
+    networks: [interna]
+
+  landing:
+    image: ${REGISTRY:-ghcr.io/maxibertaina03}/intermaterias-landing:${LANDING_TAG:?Falta LANDING_TAG}
+    restart: unless-stopped
+    volumes:
+      - ./landing/config.js:/usr/share/nginx/html/config.js:ro   # lo genera deploy.sh desde .env
+    ports:
+      - "127.0.0.1:8082:80"
+    networks: [interna]
+
+networks:
+  interna:
+
+volumes:
+  pgdata:
