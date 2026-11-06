@@ -6,6 +6,9 @@ El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y l
 
 ## [Sin publicar]
 
+### Agregado
+- `docs/despliegue.md`: qué se hizo en el despliegue en el VPS, cómo está armado, cómo publicar una versión nueva, cómo desplegar en un servidor desde cero y lo que queda pendiente.
+
 ## [2.2.1] - 2026-11-06
 
 Despliegue en el VPS: las imágenes se publican en GitHub Container Registry y el servidor solo las descarga.
