@@ -58,6 +58,13 @@ Red interna: intermaterias-net. Solo nginx publica un puerto.
 
 Guion completo de la demo de Sistemas Operativos: [docs/so/demo.md](docs/so/demo.md).
 
+## En internet (VPS)
+
+El sistema está desplegado en https://app.107-170-39-160.sslip.io y la landing en
+https://107-170-39-160.sslip.io. Se despliega con imágenes publicadas en GitHub Container
+Registry (el servidor no compila): todo está en [`produccion/`](produccion/README.md) y el
+detalle de qué se hizo y cómo volver a desplegar, en [docs/despliegue.md](docs/despliegue.md).
+
 ## Trabajo en grupo
 
 Igual que en los otros repos: ver [CONTRIBUTING.md](CONTRIBUTING.md).
