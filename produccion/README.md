@@ -33,6 +33,7 @@ Qué se hizo en el despliegue actual, el porqué de cada decisión y cómo volve
 | `scripts/revertir.sh` | Vuelve a las versiones anteriores al último deploy |
 | `scripts/backup.sh` | Dump de la base en `backups/` (14 días) |
 | `scripts/03-ssl.sh` | Instala el sitio en nginx y pide el certificado de Let's Encrypt |
+| `scripts/etl.sh` | Carga el data warehouse (esquema `dw`); corre todas las noches por cron |
 
 ## Servidor nuevo, paso a paso
 
@@ -106,6 +107,7 @@ Todo en `/opt/sistema/intermaterias-infra/produccion`.
 | Estado | `docker compose ps` |
 | Logs de la API | `docker compose logs -f --tail=200 api1 api2 api3` |
 | Backup manual | `bash scripts/backup.sh` |
+| Cargar el data warehouse | `bash scripts/etl.sh` (log de la noche: `tail ~/etl.log`) |
 | Consola de la base | `docker compose exec postgres psql -U eventos eventos` |
 | IPs bloqueadas | `sudo fail2ban-client status nginx-limit-req` |
 
@@ -117,3 +119,18 @@ en el servidor: `bash scripts/deploy.sh vX.Y.Z <versión-landing>`.
 la variable `CLERK_PUBLISHABLE_KEY` del repo del front (Settings → Secrets and variables →
 Actions → Variables), sacar un tag nuevo y poner `pk_live`/`sk_live` en el `.env` del servidor.
 Los usuarios de la instancia de desarrollo no pasan: se crean de nuevo.
+
+## Data warehouse
+
+El esquema `dw` (modelo estrella para análisis, ver `intermaterias-backend/database/warehouse/README.md`)
+vive en la misma base y se carga con `scripts/etl.sh`. Para que se actualice solo todas las noches:
+
+```bash
+crontab -e
+# 15 3 * * * bash /opt/sistema/intermaterias-infra/produccion/scripts/etl.sh >> ~/etl.log 2>&1
+```
+
+Para consultar: `docker compose exec postgres psql -U eventos eventos` y, por ejemplo,
+`SELECT * FROM dw.v_embudo;`. Con `bash scripts/etl.sh --datos-demo` se carga una empresa de
+demostración con ~3 años de actividad, para tener volumen.
+

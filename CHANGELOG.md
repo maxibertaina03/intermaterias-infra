@@ -6,6 +6,14 @@ El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y l
 
 ## [Sin publicar]
 
+## [2.4.0] - 2026-11-13
+
+Data warehouse en el VPS: el ETL corre todas las noches.
+
+### Agregado
+- `docs/versiones.md`: fila de la 2.4.0.
+- `produccion/scripts/etl.sh`: instala y carga el data warehouse (esquema `dw`) con los SQL de la imagen del backend; `--datos-demo` carga la empresa de demostración y `--reinstalar` lo crea de cero. Pensado para correr todas las noches por cron.
+
 ## [2.3.0] - 2026-11-06
 
 Versión 2.3.0: recorrido guiado para quien usa el sistema por primera vez.
@@ -76,7 +84,8 @@ Sin cambios en la infraestructura: acompaña el arreglo de la API (en Docker las
 ### Corregido
 - Si una réplica de la API se cae, Nginx la saltea en lugar de dejar pedidos colgados hasta 60 segundos (#25).
 
-[Sin publicar]: https://github.com/maxibertaina03/intermaterias-infra/compare/v2.3.0...develop
+[Sin publicar]: https://github.com/maxibertaina03/intermaterias-infra/compare/v2.4.0...develop
+[2.4.0]: https://github.com/maxibertaina03/intermaterias-infra/compare/v2.3.0...v2.4.0
 [2.3.0]: https://github.com/maxibertaina03/intermaterias-infra/compare/v2.2.1...v2.3.0
 [2.2.1]: https://github.com/maxibertaina03/intermaterias-infra/compare/v2.2.0...v2.2.1
 [2.2.0]: https://github.com/maxibertaina03/intermaterias-infra/compare/v2.1.0...v2.2.0

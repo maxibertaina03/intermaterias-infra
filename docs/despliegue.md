@@ -213,6 +213,7 @@ Todo en `/opt/sistema/intermaterias-infra/produccion`:
 | Memoria | `free -h` y `docker stats --no-stream` |
 | IPs bloqueadas / desbloquear | `sudo fail2ban-client status nginx-limit-req` / `sudo fail2ban-client unban IP` |
 | Certificado | `sudo certbot certificates` (se renueva solo) |
+| Data warehouse | `bash scripts/etl.sh` (corre solo a las 03:15; log en `~/etl.log`) |
 
 ## Pendiente
 

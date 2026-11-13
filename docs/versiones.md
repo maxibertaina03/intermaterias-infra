@@ -27,6 +27,7 @@ Cuando sube un número, los de la derecha vuelven a cero. Las versiones `0.x` fu
 | 2.2.0 | 05/11/2026 | MENOR: menú lateral agrupado y prueba gratuita de 30 días con autoregistro (base v7) |
 | 2.2.1 | 06/11/2026 | PARCHE: imágenes en GitHub Container Registry y carpeta `produccion/` para desplegar en el VPS |
 | 2.3.0 | 06/11/2026 | MENOR: recorrido guiado, primeros pasos y alta de cliente con su contacto (base v8) |
+| 2.4.0 | 13/11/2026 | MENOR: data warehouse (esquema `dw`): modelo estrella, ETL nocturno y consultas OLAP |
 
 El detalle de cada versión está en el `CHANGELOG.md` de cada repositorio.
 
