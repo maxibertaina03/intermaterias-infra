@@ -6,6 +6,9 @@ El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y l
 
 ## [Sin publicar]
 
+### Agregado
+- `produccion/scripts/etl.sh`: instala y carga el data warehouse (esquema `dw`) con los SQL de la imagen del backend; `--datos-demo` carga la empresa de demostración y `--reinstalar` lo crea de cero. Pensado para correr todas las noches por cron.
+
 ## [2.3.0] - 2026-11-06
 
 Versión 2.3.0: recorrido guiado para quien usa el sistema por primera vez.
