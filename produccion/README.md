@@ -33,7 +33,7 @@ Qué se hizo en el despliegue actual, el porqué de cada decisión y cómo volve
 | `scripts/revertir.sh` | Vuelve a las versiones anteriores al último deploy |
 | `scripts/backup.sh` | Dump de la base en `backups/` (14 días) |
 | `scripts/03-ssl.sh` | Instala el sitio en nginx y pide el certificado de Let's Encrypt |
-| `scripts/etl.sh` | Carga el data warehouse (esquema `dw`); corre todas las noches por cron |
+| `scripts/etl.sh` | Carga el data warehouse (base `eventos_dw`) y muestra la verificación; corre todas las noches por cron |
 
 ## Servidor nuevo, paso a paso
 
@@ -122,15 +122,15 @@ Los usuarios de la instancia de desarrollo no pasan: se crean de nuevo.
 
 ## Data warehouse
 
-El esquema `dw` (modelo estrella para análisis, ver `intermaterias-backend/database/warehouse/README.md`)
-vive en la misma base y se carga con `scripts/etl.sh`. Para que se actualice solo todas las noches:
+El data warehouse es otra base, `eventos_dw`, en el mismo PostgreSQL (ver
+`intermaterias-backend/database/warehouse/README.md`). Se carga con `scripts/etl.sh`, que la crea si
+falta, corre `CALL cargar_dw()` y muestra la verificación contra la base operativa. Para que se
+actualice sola todas las noches:
 
 ```bash
 crontab -e
 # 15 3 * * * bash /opt/sistema/intermaterias-infra/produccion/scripts/etl.sh >> ~/etl.log 2>&1
 ```
 
-Para consultar: `docker compose exec postgres psql -U eventos eventos` y, por ejemplo,
-`SELECT * FROM dw.v_embudo;`. Con `bash scripts/etl.sh --datos-demo` se carga una empresa de
-demostración con ~3 años de actividad, para tener volumen.
-
+Para consultar: `docker compose exec postgres psql -U eventos eventos_dw`. Con
+`bash scripts/etl.sh --datos-demo` se cargan ~3 años de datos de prueba, para tener volumen.
