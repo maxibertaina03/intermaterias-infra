@@ -6,6 +6,9 @@ El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y l
 
 ## [Sin publicar]
 
+### Cambiado
+- `produccion/scripts/etl.sh`: el data warehouse pasa a la base aparte `eventos_dw` (la crea si falta, corre `CALL cargar_dw()` y muestra la verificación contra la operativa).
+
 ## [2.4.0] - 2026-11-13
 
 Data warehouse en el VPS: el ETL corre todas las noches.

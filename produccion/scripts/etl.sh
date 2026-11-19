@@ -1,38 +1,40 @@
 #!/usr/bin/env bash
-# Carga el data warehouse (esquema dw) con los datos del sistema. Lo corre cron todas las noches.
-#   bash scripts/etl.sh                 # instala el warehouse si falta y lo carga
-#   bash scripts/etl.sh --datos-demo    # además genera la empresa de demostración (~3 años de datos)
-#   bash scripts/etl.sh --reinstalar    # borra dw y lo crea de cero (se pierde la historia de precios)
-# Los .sql salen de la imagen del backend que está desplegada (database/warehouse/).
+# Carga el data warehouse (base eventos_dw, en el mismo servidor). Lo puede correr cron todas las noches.
+#   bash scripts/etl.sh                 # crea el DW si falta, lo carga y muestra la verificación
+#   bash scripts/etl.sh --datos-demo    # además carga ~3 años de datos de prueba en la operativa
+#   bash scripts/etl.sh --reinstalar    # vuelve a crear las tablas del DW
+# Los .sql salen de la imagen del backend desplegada (database/warehouse/).
 set -euo pipefail
 cd "$(dirname "$0")/.."
 set -a; source .env; set +a
 export LANDING_TAG="${LANDING_TAG:-sin-version}"
 IMAGEN="$REGISTRY/intermaterias-backend:$SISTEMA_TAG"
 
-psqlc() { docker compose exec -T -e PGOPTIONS="-c client_min_messages=warning" postgres \
-            psql -q -v ON_ERROR_STOP=1 -U "$POSTGRES_USER" -d "$POSTGRES_DB" "$@"; }
+psql_en() { local base=$1; shift
+  docker compose exec -T -e PGOPTIONS="-c client_min_messages=warning" postgres \
+    psql -q -v ON_ERROR_STOP=1 -U "$POSTGRES_USER" -d "$base" "$@"; }
 desde_imagen() { docker run --rm --entrypoint cat "$IMAGEN" "/app/database/warehouse/$1"; }
 
-desde_imagen 02-etl.sql >/dev/null 2>&1 || {
-  echo "!! La imagen $IMAGEN no trae el warehouse (hace falta la v2.4.0 o posterior)."; exit 1; }
+desde_imagen 02-carga.sql >/dev/null 2>&1 || {
+  echo "!! La imagen $IMAGEN no trae el DW en base aparte (hace falta la v2.5.0 o posterior)."; exit 1; }
 
-INSTALADO=$(psqlc -Atc "SELECT to_regclass('dw.etl_ejecuciones') IS NOT NULL")
-if [[ ${1:-} == --reinstalar || $INSTALADO != t ]]; then
-  echo "==> Creando el esquema dw (modelo estrella)"
-  desde_imagen 01-esquema.sql | psqlc
+# La base operativa del VPS se llama $POSTGRES_DB: el esquema del DW apunta a ella
+EXISTE=$(psql_en "$POSTGRES_DB" -Atc "SELECT 1 FROM pg_database WHERE datname = 'eventos_dw'")
+if [[ $EXISTE != 1 ]]; then
+  echo "==> Creando la base eventos_dw"
+  desde_imagen 00-crear-base.sql | psql_en "$POSTGRES_DB"
 fi
-# El ETL y las vistas se actualizan siempre con los de la imagen (son CREATE OR REPLACE)
-desde_imagen 02-etl.sql | psqlc
-desde_imagen 03-vistas.sql | psqlc
+if [[ $EXISTE != 1 || ${1:-} == --reinstalar ]]; then
+  echo "==> Tablas del DW (modelo estrella)"
+  desde_imagen 01-esquema.sql | sed "s/dbname 'eventos'/dbname '$POSTGRES_DB'/" | psql_en eventos_dw
+fi
+desde_imagen 02-carga.sql | psql_en eventos_dw          # el procedimiento, siempre al día
 
 if [[ ${1:-} == --datos-demo ]]; then
-  echo "==> Datos históricos de demostración"
-  desde_imagen datos-historicos.sql | psqlc
+  echo "==> Datos de prueba en la operativa"
+  desde_imagen datos-historicos.sql | psql_en "$POSTGRES_DB"
 fi
 
-echo "==> $(date '+%F %T') Cargando el warehouse"
-psqlc -c "CALL dw.cargar();"
-psqlc -Atc "SELECT estado || ' en ' || round(extract(epoch FROM fin - inicio)::numeric, 1) || ' s · '
-                   || COALESCE(filas::text, error)
-              FROM dw.etl_ejecuciones ORDER BY id_ejecucion DESC LIMIT 1"
+echo "==> $(date '+%F %T') CALL cargar_dw()"
+psql_en eventos_dw -c "CALL cargar_dw();"
+desde_imagen 03-verificacion.sql | psql_en eventos_dw
