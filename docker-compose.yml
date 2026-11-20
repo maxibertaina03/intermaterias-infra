@@ -97,6 +97,34 @@ services:
     networks:
       - intermaterias-net
 
+  # ── pgAdmin (opcional): ver las bases con una interfaz gráfica ───
+  # No arranca con "docker compose up -d": se levanta aparte con
+  #   docker compose --profile herramientas up -d pgadmin   →  http://localhost:5050
+  # Ya trae la conexión al servidor (las bases eventos y eventos_dw) y entra sin login.
+  # Solo se publica en 127.0.0.1: nadie de la red puede entrar.
+  pgadmin:
+    image: dpage/pgadmin4:9.18
+    profiles: ["herramientas"]
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com      # obligatorio para la imagen; en modo escritorio no se usa
+      PGADMIN_DEFAULT_PASSWORD: sin-uso
+      PGADMIN_CONFIG_SERVER_MODE: "False"           # modo escritorio: entra directo, sin usuario
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: "False"
+      PGADMIN_SERVER_JSON_FILE: /pgadmin4/servers.json
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+    # Arma el archivo de contraseña de la base (pgpass) con los datos del .env y arranca pgAdmin
+    entrypoint: ["/bin/sh", "-c", "printf 'postgres:5432:*:%s:%s\n' \"$$DB_USER\" \"$$DB_PASSWORD\" > /var/lib/pgadmin/pgpass && chmod 600 /var/lib/pgadmin/pgpass && exec /entrypoint.sh"]
+    volumes:
+      - ./pgadmin/servers.json:/pgadmin4/servers.json:ro
+    ports:
+      - "127.0.0.1:5050:80"
+    depends_on:
+      - postgres
+    networks:
+      - intermaterias-net
+
 networks:
   intermaterias-net:
     driver: bridge

@@ -6,6 +6,9 @@ El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y l
 
 ## [Sin publicar]
 
+### Agregado
+- **pgAdmin** opcional en el `docker-compose.yml` (perfil `herramientas`, http://localhost:5050): interfaz gráfica para ver las bases `eventos` y `eventos_dw`, con la conexión ya configurada y solo accesible desde la propia compu.
+
 ## [2.5.1] - 2026-11-20
 
 `etl.sh --datos-demo` usa los datos de prueba de 6 meses.
