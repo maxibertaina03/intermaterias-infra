@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Carga el data warehouse (base eventos_dw, en el mismo servidor). Lo puede correr cron todas las noches.
 #   bash scripts/etl.sh                 # crea el DW si falta, lo carga y muestra la verificación
-#   bash scripts/etl.sh --datos-demo    # además carga ~3 años de datos de prueba en la operativa
+#   bash scripts/etl.sh --datos-demo    # además carga 6 meses de datos de prueba en la operativa
 #   bash scripts/etl.sh --reinstalar    # vuelve a crear las tablas del DW
 # Los .sql salen de la imagen del backend desplegada (database/warehouse/).
 set -euo pipefail
@@ -32,7 +32,7 @@ desde_imagen 02-carga.sql | psql_en eventos_dw          # el procedimiento, siem
 
 if [[ ${1:-} == --datos-demo ]]; then
   echo "==> Datos de prueba en la operativa"
-  desde_imagen datos-historicos.sql | psql_en "$POSTGRES_DB"
+  desde_imagen datos-de-prueba.sql | psql_en "$POSTGRES_DB"
 fi
 
 echo "==> $(date '+%F %T') CALL cargar_dw()"
