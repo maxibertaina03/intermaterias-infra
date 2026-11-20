@@ -1,0 +1,14 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "PostgreSQL del proyecto (eventos y eventos_dw)",
+      "Group": "Intermaterias",
+      "Host": "postgres",
+      "Port": 5432,
+      "MaintenanceDB": "eventos",
+      "Username": "postgres",
+      "PassFile": "/var/lib/pgadmin/pgpass",
+      "SSLMode": "prefer"
+    }
+  }
+}

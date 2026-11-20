@@ -58,6 +58,20 @@ Red interna: intermaterias-net. Solo nginx publica un puerto.
 
 Guion completo de la demo de Sistemas Operativos: [docs/so/demo.md](docs/so/demo.md).
 
+## Ver las bases con pgAdmin (opcional)
+
+pgAdmin es la interfaz gráfica de PostgreSQL. No arranca con el resto: se levanta aparte.
+
+```bash
+docker compose --profile herramientas up -d pgadmin   # → http://localhost:5050
+docker compose --profile herramientas stop pgadmin    # para apagarlo
+```
+
+Entra directo (sin usuario) y ya trae la conexión al servidor del proyecto, con la contraseña del
+`.env`. Ahí están las dos bases: `eventos` (la del sistema) y `eventos_dw` (el data warehouse,
+ver `intermaterias-backend/database/warehouse/README.md`). Solo se abre en esta compu
+(`127.0.0.1`): nadie de la red puede entrar.
+
 ## En internet (VPS)
 
 El sistema está desplegado en https://app.107-170-39-160.sslip.io y la landing en
