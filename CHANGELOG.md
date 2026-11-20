@@ -6,6 +6,9 @@ El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y l
 
 ## [Sin publicar]
 
+### Cambiado
+- `etl.sh --datos-demo` carga los 6 meses de datos de prueba de "Eventos del Centro" (`datos-de-prueba.sql`).
+
 ## [2.5.0] - 2026-11-19
 
 El ETL del VPS carga el data warehouse en la base aparte eventos_dw.
