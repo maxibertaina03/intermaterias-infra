@@ -30,6 +30,7 @@ Cuando sube un número, los de la derecha vuelven a cero. Las versiones `0.x` fu
 | 2.4.0 | 13/11/2026 | MENOR: data warehouse (esquema `dw`): modelo estrella, ETL nocturno y consultas OLAP |
 | 2.5.0 | 19/11/2026 | MENOR: data warehouse en base aparte (`eventos_dw`) según la consigna de Base de Datos |
 | 2.5.1 | 20/11/2026 | PARCHE: datos de prueba de 6 meses y guía en PDF del data warehouse |
+| 2.5.2 | 20/11/2026 | PARCHE: pgAdmin opcional y preguntas del DW como vistas |
 
 El detalle de cada versión está en el `CHANGELOG.md` de cada repositorio.
 

@@ -6,6 +6,14 @@ El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y l
 
 ## [Sin publicar]
 
+## [2.5.2] - 2026-11-20
+
+pgAdmin opcional para ver las bases con una interfaz gráfica.
+
+### Agregado
+- `docs/versiones.md`: fila de la 2.5.2.
+- **pgAdmin** opcional en el `docker-compose.yml` (perfil `herramientas`, http://localhost:5050): interfaz gráfica para ver las bases `eventos` y `eventos_dw`, con la conexión ya configurada y solo accesible desde la propia compu.
+
 ## [2.5.1] - 2026-11-20
 
 `etl.sh --datos-demo` usa los datos de prueba de 6 meses.
@@ -100,7 +108,8 @@ Sin cambios en la infraestructura: acompaña el arreglo de la API (en Docker las
 ### Corregido
 - Si una réplica de la API se cae, Nginx la saltea en lugar de dejar pedidos colgados hasta 60 segundos (#25).
 
-[Sin publicar]: https://github.com/maxibertaina03/intermaterias-infra/compare/v2.5.1...develop
+[Sin publicar]: https://github.com/maxibertaina03/intermaterias-infra/compare/v2.5.2...develop
+[2.5.2]: https://github.com/maxibertaina03/intermaterias-infra/compare/v2.5.1...v2.5.2
 [2.5.1]: https://github.com/maxibertaina03/intermaterias-infra/compare/v2.5.0...v2.5.1
 [2.5.0]: https://github.com/maxibertaina03/intermaterias-infra/compare/v2.4.0...v2.5.0
 [2.4.0]: https://github.com/maxibertaina03/intermaterias-infra/compare/v2.3.0...v2.4.0
