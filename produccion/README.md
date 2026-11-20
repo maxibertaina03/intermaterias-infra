@@ -133,4 +133,4 @@ crontab -e
 ```
 
 Para consultar: `docker compose exec postgres psql -U eventos eventos_dw`. Con
-`bash scripts/etl.sh --datos-demo` se cargan ~3 años de datos de prueba, para tener volumen.
+`bash scripts/etl.sh --datos-demo` se cargan 6 meses de datos de prueba en "Eventos del Centro".
